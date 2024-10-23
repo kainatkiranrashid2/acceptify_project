@@ -1,0 +1,42 @@
+// import FlexCaseAnimation from "../../components/FlexcaseAnimation/FlexcaseSequence";
+// import Hero from "../../components/Hero/Hero";
+import OurClients from "../../components/OurClients/OurClients";
+import TransactionGlobe from "../../components/GithubGlobe/TransactionGlobe";
+import TransactionGlobeNew from "../../components/GithubGlobeNew/TransactionGlobeNew";
+import HeroSection from "../../components/HeroSection/HeroSection";
+import OurIndustries from "../../components/OurIndustries/OurIndustries";
+import ParticleGlobe from "../../components/ParticleGlobe/ParticleGlobe";
+import ParticleGlobeNew from "../../components/Scene/Scene";
+import Scene from "../../components/Scene/Scene";
+import SecurityComponent from "../../components/SecurityComponent/SecurityComponent";
+import MoreFeatures from "../../MoreFeatures/MoreFeatures";
+import ClaimsSection from "../../components/ClaimsSection/ClaimsSection";
+import FeatureCarousel from "../../components/FeatureCarousel/FeatureCarousel";
+
+// import SectionHeading from "../../components/reuseable_components/SectionHeading";
+// import ScrollAnimationComponent from "../../components/ScrollAnimationComponent/ScrollAnimationComponent";
+// import ScrollSequence from "../../components/ScrollSequence/ScrollSequence";
+// import WhyChooseUs from "../../components/WhyChooseUs/WhyChooseUs";
+
+const Home = () => {
+  return (
+    <>
+      <HeroSection />
+      <OurClients />
+      <ClaimsSection />
+      <FeatureCarousel />
+      {/* <MoreFeatures /> */}
+      {/* <SecurityComponent /> */}
+
+      {/* <TransactionGlobe /> */}
+      {/* <div className="h-4"></div> */}
+      {/* <TransactionGlobeNew /> */}
+      {/* <ParticleGlobeNew /> */}
+
+      {/* <ParticleGlobe /> */}
+      {/* <OurIndustries /> */}
+    </>
+  );
+};
+
+export default Home;
