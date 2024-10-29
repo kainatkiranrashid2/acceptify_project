@@ -16,7 +16,7 @@ import { FaEquals } from "react-icons/fa";
 const NavbarMenu = [
   {
     id: 1,
-    title: "Payment Devices",
+    title: "Payment Peripherals",
     path: "/",
   },
   {
@@ -136,9 +136,9 @@ const Navbar = () => {
         className="h-[82px]  relative z-50">
         <div className="container bg-transparent h-full flex justify-between items-center">
           {/* Logo section */}
-          <div className="h-[62px] w-[62px] flex items-center">
+          <div className="h-[48px] w-[132px] flex items-center">
             <img
-              src="/assets/acceptify.png"
+              src="/assets/final_logo.png"
               className="bg-transparent h-full w-auto object-contain"
               alt="lsapay_logo"
             />

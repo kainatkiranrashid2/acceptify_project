@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const Claims = ({ heading, description, totalImages, imagePath }) => {
   return (
     <div>
-      <div className="w-[985px] text-center mx-auto ">
+      {/* <div className="w-[985px] text-center mx-auto ">
         <h1 className="text-[55px]/[60.5px] hidden md:block tracking-tight font-Inter font-bold text-center">
           {heading}
         </h1>
@@ -13,7 +13,7 @@ const Claims = ({ heading, description, totalImages, imagePath }) => {
             {description}
           </p>
         )}
-      </div>
+      </div> */}
       <ScrollImageSequence
         heading={heading}
         description={description}

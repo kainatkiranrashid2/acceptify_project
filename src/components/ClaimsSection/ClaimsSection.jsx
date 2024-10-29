@@ -24,7 +24,7 @@ const claimsData = [
 
 const ClaimsSection = () => {
   return (
-    <div className="bg-white">
+    <div className="">
       {claimsData.map((claim, index) => (
         <Claims
           key={index}

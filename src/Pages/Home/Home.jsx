@@ -12,6 +12,10 @@ import SecurityComponent from "../../components/SecurityComponent/SecurityCompon
 import MoreFeatures from "../../MoreFeatures/MoreFeatures";
 import ClaimsSection from "../../components/ClaimsSection/ClaimsSection";
 import FeatureCarousel from "../../components/FeatureCarousel/FeatureCarousel";
+import CodeSnippet from "../../components/CodeSnippet/CodeSnippet";
+import BeautifulBranding from "../../components/BeautifulBranding/BeautifulBranding";
+import claimsBackground from "/assets/claims_bg.png";
+import IndustriesSection from "../../components/IndustriesSection/IndustriesSection";
 
 // import SectionHeading from "../../components/reuseable_components/SectionHeading";
 // import ScrollAnimationComponent from "../../components/ScrollAnimationComponent/ScrollAnimationComponent";
@@ -23,8 +27,20 @@ const Home = () => {
     <>
       <HeroSection />
       <OurClients />
-      <ClaimsSection />
-      <FeatureCarousel />
+      <SecurityComponent />
+      <div className="bg-white ">
+        <div
+          className="p-4 bg-cover bg-no-repeat bg-center"
+          style={{
+            backgroundImage: `url('/assets/claims_bg.svg')`,
+          }}>
+          <ClaimsSection />
+          <CodeSnippet />
+          <BeautifulBranding />
+        </div>
+        <IndustriesSection />
+      </div>
+      {/* <FeatureCarousel /> */}
       {/* <MoreFeatures /> */}
       {/* <SecurityComponent /> */}
 
