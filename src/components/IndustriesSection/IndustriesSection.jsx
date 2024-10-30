@@ -17,9 +17,9 @@ const IndustriesSection = () => {
             Industries
           </h1>
           <p className="text-[18px]/[27px] mb-6 text-white font-Inter">
-            We mean it! Enterprise Mobile Payments Anywhere, Anytime. Acceptify
-            processes worldwide transactions for the most complex industries.
-            Here are just a few industries we work with.
+            We mean it! Enterprise Mobile Payments Anywhere, Anytime, even
+            Offline. Acceptify processes worldwide transactions for the most
+            complex industries. Here are just a few industries we work with.
           </p>
           <button className="bg-primary text-white px-[26px] rounded-md py-[14px] text-[16px]/[27px]">
             Explore Industries
