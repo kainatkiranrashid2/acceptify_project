@@ -7,7 +7,7 @@ const HeroSection = () => {
         autoPlay
         loop
         muted>
-        <source src="/assets/herosection/header_v9.webm" type="video/webm" />
+        <source src="/assets/herosection/header_v10.webm" type="video/webm" />
         Your browser does not support the video tag.
       </video>
 

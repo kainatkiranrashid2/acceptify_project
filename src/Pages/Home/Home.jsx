@@ -16,6 +16,8 @@ import CodeSnippet from "../../components/CodeSnippet/CodeSnippet";
 import BeautifulBranding from "../../components/BeautifulBranding/BeautifulBranding";
 import claimsBackground from "/assets/claims_bg.png";
 import IndustriesSection from "../../components/IndustriesSection/IndustriesSection";
+import CTASection from "../../components/CTA/CTASection";
+import Footer from "../../components/Footer/Footer";
 
 // import SectionHeading from "../../components/reuseable_components/SectionHeading";
 // import ScrollAnimationComponent from "../../components/ScrollAnimationComponent/ScrollAnimationComponent";
@@ -39,6 +41,8 @@ const Home = () => {
           <BeautifulBranding />
         </div>
         <IndustriesSection />
+        <CTASection />
+        <Footer />
       </div>
       {/* <FeatureCarousel /> */}
       {/* <MoreFeatures /> */}
