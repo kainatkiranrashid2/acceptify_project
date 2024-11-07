@@ -37,14 +37,14 @@ const PanCakeClaim = () => {
       <div className="text-black text-[32px] leading-[46px] font-bold tracking-tighter mb-6">
         {headerText}
       </div>
-      <div className="h-[580px] w-full">
+      <div className="relative w-full h-[calc(100vh-100px)]">
         <video
           ref={videoRef}
-          className="w-full h-full object-fill"
+          className="absolute top-0 left-0 w-full h-full object-cover"
           autoPlay
           loop
           muted>
-          <source src="/assets/pancake/pancake_v3.webm" type="video/webm" />
+          <source src="/assets/pancake/pancake_v2.webm" type="video/webm" />
           Your browser does not support the video tag.
         </video>
       </div>
