@@ -18,6 +18,10 @@ import claimsBackground from "/assets/claims_bg.png";
 import IndustriesSection from "../../components/IndustriesSection/IndustriesSection";
 import CTASection from "../../components/CTA/CTASection";
 import Footer from "../../components/Footer/Footer";
+import FeaturesGrid from "../../components/FeatureGrid/FeatureGrid";
+import SmartTransaction from "../../components/SmartTransaction/SmartTransaction";
+import LighteningFastTransaction from "../../components/LighteningFastTransaction/LighteningFastTransaction";
+import PanCakeClaim from "../../components/PanCakeClaim/PanCakeClaim";
 
 // import SectionHeading from "../../components/reuseable_components/SectionHeading";
 // import ScrollAnimationComponent from "../../components/ScrollAnimationComponent/ScrollAnimationComponent";
@@ -30,16 +34,20 @@ const Home = () => {
       <HeroSection />
       <OurClients />
       <SecurityComponent />
-      <div className="bg-white ">
+      <div className="bg-white  dark:bg-black">
         <div
-          className="p-4 bg-cover bg-no-repeat bg-center"
+          className="bg-contain bg-repeat bg-center"
           style={{
             backgroundImage: `url('/assets/claims_bg.svg')`,
           }}>
-          <ClaimsSection />
+          <PanCakeClaim />
+          {/* <ClaimsSection /> */}
           <CodeSnippet />
           <BeautifulBranding />
+          <LighteningFastTransaction />
         </div>
+        <FeaturesGrid />
+        <SmartTransaction />
         <IndustriesSection />
         <CTASection />
         <Footer />

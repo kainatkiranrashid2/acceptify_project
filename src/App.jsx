@@ -9,7 +9,7 @@ import Home from "./Pages/Home/Home";
 function App() {
   return (
     <Router className="">
-      <div className="relative min-h-screen w-full bg-gradient-to-br from-[#6E3BFB] to-[#2D79FF] overflow-hidden">
+      <div className="relative min-h-screen w-full bg-gradient-to-br from-[#6E3BFB] to-[#2D79FF] dark:from-[#2E1969] dark:to-[#000] overflow-hidden">
         {/* Main white glow effect */}
         <div className="absolute -top-36 -left-32 w-80 h-80 bg-white rounded-full blur-2xl"></div>
 

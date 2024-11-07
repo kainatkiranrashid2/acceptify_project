@@ -121,7 +121,7 @@ const OurClients = ({ classText }) => {
   };
 
   return (
-    <div className="relative isolate   !h-[59px] lg:!h-[80px] xl:!h-[100px]  bg-white  py-5 lg:py-10 w-full  overflow-hidden">
+    <div className="relative isolate   !h-[59px] lg:!h-[80px] xl:!h-[100px]  bg-white  dark:bg-black py-5 lg:py-10 w-full  overflow-hidden">
       <AnimatePresence initial={false} className="!h-[52px]">
         <motion.div
           key={currentIndex}
@@ -163,14 +163,14 @@ const OurClients = ({ classText }) => {
           ))}
         </motion.div>
       </AnimatePresence>
-      <div className="absolute left-0 top-0 lg:top-1/2 h-full w-10 sm:w-12 md:w-14 lg:w-16 ">
+      <div className="absolute dark:bg-black left-0 top-0 lg:top-1/2 h-full w-10 sm:w-12 md:w-14 lg:w-16 ">
         <button
           onClick={prevSlide}
-          className=" transform lg:-translate-y-1/2 flex bg-white justify-center h-full items-center p-2 sm:p-3 md:p-4 lg:p-5 z-10">
+          className=" transform lg:-translate-y-1/2 flex bg-white  dark:bg-black justify-center h-full items-center p-2 sm:p-3 md:p-4 lg:p-5 z-10">
           <FaArrowLeft size={24} className="text-[#707070]  md:hidden" />
           <FaArrowLeft
             size={28}
-            className="text-[#707070] hidden md:block lg:hidden"
+            className="text-[#707070]  hidden md:block lg:hidden"
           />
           <FaArrowLeft size={44} className="text-[#707070] hidden lg:block" />
         </button>
@@ -178,7 +178,7 @@ const OurClients = ({ classText }) => {
       <div className="absolute right-4  top-0 lg:top-1/2 h-full w-10 sm:w-12 md:w-14 lg:w-16 ">
         <button
           onClick={nextSlide}
-          className="transform lg:-translate-y-1/2   bg-white flex justify-center  items-center h-full p-2 sm:p-3 md:p-4  lg:p-5 z-10">
+          className="transform lg:-translate-y-1/2   bg-white dark:bg-black  flex justify-center  items-center h-full p-2 sm:p-3 md:p-4  lg:p-5 z-10">
           <FaArrowRight size={24} className="text-[#707070] md:hidden" />
           <FaArrowRight
             size={28}

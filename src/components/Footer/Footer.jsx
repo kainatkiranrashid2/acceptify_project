@@ -129,10 +129,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        {/* <div className="m-10">
+        <div className="m-10">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-2">
+              <h2 className="text-[40px]/[40px] font-bold text-white mb-2">
                 If you didn find the products you are interested in or have
                 questions?
               </h2>
@@ -164,7 +164,17 @@ const Footer = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
+        <div className="m-10">
+          <div className="flex justify-between flex-row gap-8 items-center">
+            <div className="text-white text-[10px] font-Inter font-normal">
+              &copy; 2023 — Copyright
+            </div>
+            <div className="text-white text-[10px] font-Inter font-normal items-end">
+              Privacy
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

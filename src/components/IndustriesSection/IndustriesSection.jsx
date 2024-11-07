@@ -28,7 +28,7 @@ const IndustriesSection = () => {
         <div className="w-1/2">
           <video className="w-full h-full object-cover" autoPlay loop muted>
             <source
-              src="/assets/industries/industries.webm"
+              src="/assets/industries/industries_v2.webm"
               type="video/webm"
             />
             Your browser does not support the video tag.

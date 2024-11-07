@@ -18,7 +18,7 @@ const CTASection = () => {
         </div>
         <div className="w-1/2">
           <video className="w-full h-full object-cover" autoPlay loop muted>
-            <source src="/assets/CTA/half_vid.webm" type="video/webm" />
+            <source src="/assets/CTA/half_vid_v2.webm" type="video/webm" />
             Your browser does not support the video tag.
           </video>
         </div>
