@@ -7,11 +7,11 @@ const Footer = () => {
   return (
     <div className="bg-white">
       <div
-        className="p-4 bg-cover bg-no-repeat bg-center"
+        className="p-4 bg-cover bg-no-repeat bg-center "
         style={{
           backgroundImage: `url('/assets/footer/footer_bg.svg')`,
         }}>
-        <div className="bg-white m-10 pt-16 pb-6">
+        <div className="bg-white m-10 pt-16 pb-6 rounded-xl">
           <div className="max-w-7xl mx-8 my-4 px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
               {/* Logo */}
