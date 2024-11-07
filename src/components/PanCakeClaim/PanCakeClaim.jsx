@@ -37,7 +37,7 @@ const PanCakeClaim = () => {
       <div className="text-black text-[32px] leading-[46px] font-bold tracking-tighter mb-6">
         {headerText}
       </div>
-      <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px]">
+      <div className="relative h-[70vh] md:h-[80vh] lg:h-[90vh]">
         <video
           ref={videoRef}
           className="absolute top-0 left-0 w-full h-full object-cover aspect-video"
