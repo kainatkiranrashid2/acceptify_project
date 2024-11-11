@@ -62,11 +62,11 @@ const ThemeToggle = () => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center !w-[102px] h-[46px] py-[17.5px] px-6  border-[1px]   border-black dark:border-white bg-transparent dark:bg-transparent text-center  rounded-lg "
+        className="flex items-center !w-[102px] h-[46px] py-[17.5px] px-6  border-[1px]   border-white dark:border-white bg-transparent dark:bg-transparent text-center  rounded-lg "
         aria-haspopup="listbox"
         aria-expanded={isOpen}>
         {getIcon()}
-        <span className="font-bold text-[#060606] dark:text-white font-PP_Mori   ">
+        <span className="font-bold text-white dark:text-white font-PP_Mori   ">
           Theme
         </span>
         {/* {theme} */}

@@ -150,7 +150,7 @@ const Navbar = () => {
                 <li key={menu.id} className="relative">
                   <Link
                     to={menu.path}
-                    className="flex text-dark dark:text-white  justify-center items-center font-PP_Mori font-semibold py-2 px-3 text-[16px]  relative group"
+                    className="flex text-white dark:text-white  justify-center items-center font-PP_Mori font-semibold py-2 px-3 text-[16px]  relative group"
                     onClick={() => {
                       if (menu.title === "Industries") {
                         setIsSolutionOpen(!isSolutionOpen);
