@@ -3,7 +3,7 @@ const HeroSection = () => {
     <div className="relative w-full h-[calc(100vh-100px)]">
       {/* Video background */}
       <video
-        className="absolute top-0 left-0 w-full h-full object-contain "
+        className="absolute top-0 left-0 w-full h-full object-cover "
         autoPlay
         loop
         muted>
