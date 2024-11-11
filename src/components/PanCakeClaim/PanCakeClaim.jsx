@@ -33,7 +33,7 @@ const PanCakeClaim = () => {
   }, []);
 
   return (
-    <div className="p-20">
+    <div className="min-h-screen p-20">
       <div className="text-black text-[32px] leading-[46px] font-bold tracking-tighter mb-2">
         {headerText}
       </div>
