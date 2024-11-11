@@ -1,9 +1,9 @@
 const HeroSection = () => {
   return (
-    <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="relative w-full h-[calc(100vh-70px)]">
       {/* Video background */}
       <video
-        className="absolute top-0 left-0 w-full h-full object-cover"
+        className="absolute top-0 left-0 w-full h-full object-contain"
         autoPlay
         loop
         muted>
