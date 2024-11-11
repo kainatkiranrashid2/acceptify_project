@@ -40,7 +40,7 @@ const PanCakeClaim = () => {
       <div className="relative w-full h-[calc(100vh-100px)]">
         <video
           ref={videoRef}
-          className="absolute top-0 left-0 w-full h-full object-contain "
+          className="absolute top-0 left-0 w-full h-full object-cover "
           autoPlay
           loop
           muted>
