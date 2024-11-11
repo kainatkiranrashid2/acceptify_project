@@ -34,13 +34,13 @@ const PanCakeClaim = () => {
 
   return (
     <div className="p-20">
-      <div className="text-black text-[32px] leading-[46px] font-bold tracking-tighter mb-6">
+      <div className="text-black text-[32px] leading-[46px] font-bold tracking-tighter mb-2">
         {headerText}
       </div>
-      <div className="relative w-full h-[calc(100vh-100px)]">
+      <div className="relative w-full h-[calc(100vh-120px)]">
         <video
           ref={videoRef}
-          className="absolute top-0 left-0 w-full h-full object-cover "
+          className="absolute top-0 left-0 w-full h-full object-contain "
           autoPlay
           loop
           muted>
