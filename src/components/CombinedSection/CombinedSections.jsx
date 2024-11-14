@@ -56,17 +56,6 @@ const CombinedSections = () => {
 
   const sections = [
     {
-      video: "/assets/beautiful_branding/beatiful_branding_v2.webm",
-      title: (
-        <div className="w-fit font-Inter font-bold xl:text-[52px]/[65px] 2xl:text-[55px]/[79.2px] tracking-tighter">
-          <span className="bg-primary text-white px-6">
-            Represent your Brand
-          </span>
-          <span> anywhere you take transactions.</span>
-        </div>
-      ),
-    },
-    {
       video: "/assets/code_snip/code_snip_v2.webm",
       title: (
         <div className="space-y-4">
@@ -82,6 +71,17 @@ const CombinedSections = () => {
             Acceptify is PABP Certified making your payment applications secure
             and easier to certify.
           </p>
+        </div>
+      ),
+    },
+    {
+      video: "/assets/beautiful_branding/beatiful_branding_v2.webm",
+      title: (
+        <div className="w-fit font-Inter font-bold xl:text-[52px]/[65px] 2xl:text-[55px]/[79.2px] tracking-tighter">
+          <span className="bg-primary text-white px-6">
+            Represent your Brand
+          </span>
+          <span> anywhere you take transactions.</span>
         </div>
       ),
     },
