@@ -14,7 +14,7 @@ const FeatureCard = ({ title, description, icon, isLarge = false }) => (
       bg-white/[0.1]
       rounded-xl
       overflow-hidden 
-      py-7 px-5
+      pt-7 px-5
     ${isLarge ? "md:col-span-2" : "md:col-span-1"}`}>
     <div className="flex flex-col h-full ">
       <h3 className="text-[24px] font-Inter max-w-[75%] text-white bg-transparent font-semibold mb-2 ">
@@ -55,7 +55,7 @@ const FeaturesGrid = () => {
       isLarge: true,
     },
     {
-      title: "Global Payments",
+      title: "Enterprise payments anywhere",
       icon: "/assets/featuregrid/global_payments.png",
       description:
         "We are a true enterprise payment solution. We enable you to take local payments in nearly all worldwide currencies. Bring your own processors or we can help you select one.",
