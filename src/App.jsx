@@ -11,7 +11,7 @@ function App() {
     <Router className="">
       <div className="relative min-h-screen w-full bg-gradient-to-br from-[#6E3BFB] to-[#2D79FF] dark:from-[#2E1969] dark:to-[#000] overflow-hidden">
         {/* Main white glow effect */}
-        <div className="absolute -top-36 -left-32 w-80 h-80 bg-white rounded-full blur-2xl"></div>
+        <div className="absolute -top-48 -left-32 w-[376px] h-[376px] bg-white rounded-full blur-3xl"></div>
 
         {/* Secondary smaller glow for intensity */}
         <div className="absolute -top-5 -left-5 w-32 h-32 bg-white/30 rounded-full blur-3xl"></div>

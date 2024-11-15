@@ -16,67 +16,31 @@ import { FaEquals } from "react-icons/fa";
 const NavbarMenu = [
   {
     id: 1,
-    title: "Payment Peripherals",
+    title: "Devices",
     path: "/",
   },
   {
     id: 2,
-    title: "Payment Processing",
+    title: "Payments",
     path: "#",
   },
   {
     id: 3,
-    title: "POS Solution",
+    title: "POS Solutions",
     path: "#",
   },
   {
     id: 4,
     title: "Industries",
-    path: "#",
-    dropdown: {
-      businessSolutions: [
-        {
-          icon: <BsArrowRepeat />,
-          title: "Industries",
-          description: "Analyze conversation",
-        },
-        {
-          icon: <MdOutlineDashboardCustomize />,
-          title: "Payment Processing",
-          description: "Measure active usage",
-        },
-      ],
-      industrySolutions: [
-        {
-          icon: <PiArrowsOutBold />,
-          title: "POS Solution",
-          description: "Find retention drivers",
-        },
-        {
-          icon: <HiOutlineInboxIn />,
-          title: "Back Office",
-          description: "Maximize all customers",
-        },
-      ],
-      insight: [
-        { icon: "icon-land", title: "Land" },
-        { icon: "icon-air", title: "Air" },
-        { icon: "icon-sea", title: "Sea" },
-      ],
-      insightDescription:
-        "Machine learning and product analytics...Machine learning and product analytics...Machine learning and product analytics...Machine learning and product analytics...Machine learning and product analytics... ",
-    },
-  },
-  {
-    id: 5,
-    title: "Support",
-    path: "#",
+    path: "/industries",
+    
   },
   {
     id: 5,
     title: "Developer",
     path: "#",
   },
+  
 ];
 
 const Navbar = () => {
@@ -133,53 +97,47 @@ const Navbar = () => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="h-[82px]  relative z-50">
-        <div className="container bg-transparent h-full flex justify-between items-center">
+        className="h-[52px] 3xl:mx-[140px] 3xl:mt-20  relative z-50">
+        <div className=" bg-transparent h-full flex justify-between items-center">
           {/* Logo section */}
-          <div className="h-[48px] w-[132px] flex items-center">
+          <div className="h-[52px] w-[188px] flex items-center">
             <img
               src="/assets/final_logo.png"
               className="bg-transparent h-full w-auto object-contain"
-              alt="lsapay_logo"
+              alt="acceptify_logo"
             />
           </div>
           {/* Menu Section */}
           <div className="hidden lg:block">
-            <ul className="flex items-center gap-3">
-              {NavbarMenu.map((menu) => (
-                <li key={menu.id} className="relative">
-                  <Link
-                    to={menu.path}
-                    className="flex text-white dark:text-white  justify-center items-center font-PP_Mori font-semibold py-2 px-3 text-[16px]  relative group"
-                    onClick={() => {
-                      if (menu.title === "Industries") {
-                        setIsSolutionOpen(!isSolutionOpen);
-                      }
-                    }}>
-                    {menu.title}
-                    {menu.title === "Industries" && (
-                      <span className="ml-1">
-                        {isSolutionOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="flex items-center gap-16">
+              <ul className="flex items-center gap-6">
+                {NavbarMenu.map((menu) => (
+                  <li key={menu.id} className="">
+                    <Link
+                      to={menu.path}
+                      className="flex text-white dark:text-white  justify-center items-center font-Inter font-medium py-2 px-3 text-[16px]  3xl:text-[24px]/[24px] relative group"
+                      >
+                      {menu.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <div className="hidden lg:flex gap-4 items-center">
+                <ThemeToggle />
+                <motion.button
+                  className=" primary-btn flex items-center text-white 3xl:text-[16px]/[16px] font-semibold !w-[139px] !h-[46px] py-[17.5px] px-6 rounded-lg font-PP_Mori"
+                  whileHover={{
+                    scale: 1.2,
+                    boxShadow: "0px 0px 8px rgb(255,255,255)",
+                    transition: { duration: 0.2 },
+                  }}
+                  whileTap={{ scale: 0.95 }}>
+                  Get Started
+                </motion.button>
+              </div>
           </div>
-          <div className="hidden lg:flex gap-[14px] items-center">
-            <ThemeToggle />
-            <motion.button
-              className=" primary-btn flex items-center text-white text-[16px] font-bold !w-[139px] !h-[46px] py-[17.5px] px-6 rounded-lg font-PP_Mori"
-              whileHover={{
-                scale: 1.2,
-                boxShadow: "0px 0px 8px rgb(255,255,255)",
-                transition: { duration: 0.2 },
-              }}
-              whileTap={{ scale: 0.95 }}>
-              Get Started
-            </motion.button>
           </div>
+          
           {/* Mobile Hamburger menu section */}
           <div className="lg:hidden">
             <FaEquals
@@ -203,26 +161,9 @@ const Navbar = () => {
                     <li key={menu.id}>
                       <div
                         className="flex justify-between items-center font-Inter font-semibold py-2 px-3 hover:text-primary cursor-pointer"
-                        onClick={() => {
-                          if (menu.title === "Industries") {
-                            setMobileSubmenu(
-                              mobileSubmenu === "Industries"
-                                ? null
-                                : "Industries"
-                            );
-                          } else {
-                            setIsMobileMenuOpen(false);
-                          }
-                        }}>
+                        >
                         <Link to={menu.path}>{menu.title}</Link>
-                        {menu.title === "Industries" && (
-                          <span
-                            className={`transition-transform duration-300 ${
-                              mobileSubmenu === "Industries" ? "rotate-180" : ""
-                            }`}>
-                            <IoIosArrowDown />
-                          </span>
-                        )}
+                        
                       </div>
                       {menu.title === "Industries" &&
                         mobileSubmenu === "Industries" && (

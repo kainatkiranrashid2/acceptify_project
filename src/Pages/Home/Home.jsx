@@ -32,20 +32,15 @@ const Home = () => {
   return (
     <>
       <HeroSection />
-      <OurClients />
-      <SecurityComponent />
+      {/* <OurClients /> */}
+      {/* <SecurityComponent /> */}
       <div className="bg-white  dark:bg-black">
-        <div
-          className="bg-contain bg-repeat bg-center"
-          style={{
-            backgroundImage: `url('/assets/claims_bg.svg')`,
-          }}>
-          <PanCakeClaim />
-          {/* <ClaimsSection /> */}
-          <CodeSnippet />
-          <BeautifulBranding />
-          <LighteningFastTransaction />
-        </div>
+        <PanCakeClaim />
+        {/* <ClaimsSection /> */}
+        <CodeSnippet />
+        <BeautifulBranding />
+        <LighteningFastTransaction />
+
         <FeaturesGrid />
         <SmartTransaction />
         <IndustriesSection />

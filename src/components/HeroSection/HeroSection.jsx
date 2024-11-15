@@ -12,16 +12,20 @@ const HeroSection = () => {
       </video>
 
       {/* Text overlay */}
-      <div className="ml-16 relative z-10 h-full flex items-center">
+      <div className="ml-[140px] relative z-10 h-full flex items-center">
         <div className="xl:max-w-[677px]">
-          <h1 className="lg:text-[59px]/[64.9px] xl:text-[69px]/[75px] font-Inter text-white font-bold tracking-tighter">
-            Lighting Fast Enterprise Payments Anywhere
+          <h1 className="3xl:text-[60px]/[66px] font-Inter text-white font-semibold tracking-tighter">
+            Lighting Fast Mobile Enterprise Payments Anywhere
           </h1>
-          <p className="text-white text-[21px]/[34.65px] font-normal font-Inter mt-[27px]">
+          <p className="text-white 3xl:text-[24px]/[39.6px] font-normal font-Inter my-[12px]">
             Acceptify enables your applications to accept worldwide, secure,
             certified, online/offline payments while removing all of your
             security concerns.
           </p>
+
+          <button className="bg-primary  text-white 3xl:text-[15px]/[24px] font-semibold font-Inter px-3 py-[6px] leading-[0.2px] rounded-2xl">
+            Start now
+          </button>
         </div>
       </div>
     </div>
