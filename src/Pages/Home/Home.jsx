@@ -22,6 +22,7 @@ import FeaturesGrid from "../../components/FeatureGrid/FeatureGrid";
 import SmartTransaction from "../../components/SmartTransaction/SmartTransaction";
 import LighteningFastTransaction from "../../components/LighteningFastTransaction/LighteningFastTransaction";
 import PanCakeClaim from "../../components/PanCakeClaim/PanCakeClaim";
+import CombinedSections from "../../components/CombinedSection/CombinedSections";
 
 // import SectionHeading from "../../components/reuseable_components/SectionHeading";
 // import ScrollAnimationComponent from "../../components/ScrollAnimationComponent/ScrollAnimationComponent";

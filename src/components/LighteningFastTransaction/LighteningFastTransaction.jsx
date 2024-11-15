@@ -17,7 +17,7 @@ const LighteningFastTransaction = () => {
         <div className="w-1/2 p-10">
           <p className="text-[55px]/[79.2px] font-bold font-Inter w-full">
             <span className="bg-primary text-white px-6">Lightning Fast</span>{" "}
-            online and instant processing with background mode.​
+            online and offline processing with background mode
           </p>
         </div>
       </div>
