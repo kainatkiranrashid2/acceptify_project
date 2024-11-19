@@ -17,9 +17,9 @@ const HeroSection = () => {
     },
   });
 
-  const myVideo = cld.video("acceptify/assets/herosection/header_v12");
+  const heroVideo = cld.video("acceptify/assets/herosection/header_v12");
 
-  myVideo.resize(
+  heroVideo.resize(
     fill()
       .width(1920)
       .height(1080)
@@ -41,7 +41,7 @@ const HeroSection = () => {
         autoPlay
         loop
         muted
-        cldVid={myVideo}
+        cldVid={heroVideo}
         controls={false}
       />
 

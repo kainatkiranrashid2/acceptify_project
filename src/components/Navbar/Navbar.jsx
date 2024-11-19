@@ -33,14 +33,12 @@ const NavbarMenu = [
     id: 4,
     title: "Industries",
     path: "/industries",
-    
   },
   {
     id: 5,
     title: "Developer",
     path: "#",
   },
-  
 ];
 
 const Navbar = () => {
@@ -97,7 +95,7 @@ const Navbar = () => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="h-[52px] 3xl:mx-[140px] 3xl:mt-20  relative z-50">
+        className="h-[52px] 3xl:mx-[140px] 3xl:mt-10  relative z-50">
         <div className=" bg-transparent h-full flex justify-between items-center">
           {/* Logo section */}
           <div className="h-[52px] w-[188px] flex items-center">
@@ -115,8 +113,7 @@ const Navbar = () => {
                   <li key={menu.id} className="">
                     <Link
                       to={menu.path}
-                      className="flex text-white dark:text-white  justify-center items-center font-Inter font-medium py-2 px-3 text-[16px]  3xl:text-[24px]/[24px] relative group"
-                      >
+                      className="flex text-white dark:text-white  justify-center items-center font-Inter font-medium py-2 px-3 text-[16px]  3xl:text-[24px]/[24px] relative group">
                       {menu.title}
                     </Link>
                   </li>
@@ -135,9 +132,9 @@ const Navbar = () => {
                   Get Started
                 </motion.button>
               </div>
+            </div>
           </div>
-          </div>
-          
+
           {/* Mobile Hamburger menu section */}
           <div className="lg:hidden">
             <FaEquals
@@ -159,11 +156,8 @@ const Navbar = () => {
                 <ul className="space-y-4">
                   {NavbarMenu.map((menu) => (
                     <li key={menu.id}>
-                      <div
-                        className="flex justify-between items-center font-Inter font-semibold py-2 px-3 hover:text-primary cursor-pointer"
-                        >
+                      <div className="flex justify-between items-center font-Inter font-semibold py-2 px-3 hover:text-primary cursor-pointer">
                         <Link to={menu.path}>{menu.title}</Link>
-                        
                       </div>
                       {menu.title === "Industries" &&
                         mobileSubmenu === "Industries" && (
