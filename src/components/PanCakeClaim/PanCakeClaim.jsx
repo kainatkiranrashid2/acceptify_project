@@ -1,15 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { AdvancedVideo } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
 
-// Import required actions and qualifiers.
-import { fill } from "@cloudinary/url-gen/actions/resize";
-import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { Gravity } from "@cloudinary/url-gen/qualifiers";
-import { AutoFocus } from "@cloudinary/url-gen/qualifiers/autoFocus";
-
 const PanCakeClaim = () => {
-  // dq5guzzge
+  const videoRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const cld = new Cloudinary({
     cloud: {
@@ -17,17 +11,8 @@ const PanCakeClaim = () => {
     },
   });
 
-  const pancakeVideo = cld.video("acceptify/assets/pancake/pancake_v3");
-
-  pancakeVideo.resize(
-    fill()
-      .width(1920)
-      .height(1080)
-      .gravity(
-        Gravity.autoGravity().autoFocus(AutoFocus.focusOn(FocusOn.faces()))
-      )
-  );
-  const videoRef = useRef(null);
+  // Generate Cloudinary URL directly
+  const videoUrl = `https://res.cloudinary.com/dq5guzzge/video/upload/v1/acceptify/assets/pancake/pancake_v3`;
 
   const [content, setContent] = useState({
     title: "Protect your Customers and your Reputation with Acceptify",
@@ -67,11 +52,11 @@ const PanCakeClaim = () => {
 
   useEffect(() => {
     const video = videoRef.current;
+    if (!video) return;
 
     const handleTimeUpdate = () => {
       const currentTime = video.currentTime;
 
-      // Find the appropriate content based on timestamp
       const timestamps = Object.keys(timeBasedContent)
         .map(Number)
         .sort((a, b) => b - a);
@@ -83,9 +68,21 @@ const PanCakeClaim = () => {
       }
     };
 
+    // Handle video loading
+    const handleCanPlay = () => {
+      video.play().catch((error) => {
+        console.error("Video playback failed:", error);
+      });
+    };
+
+    video.addEventListener("canplay", handleCanPlay);
     video.addEventListener("timeupdate", handleTimeUpdate);
 
+    // Load the video
+    video.load();
+
     return () => {
+      video.removeEventListener("canplay", handleCanPlay);
       video.removeEventListener("timeupdate", handleTimeUpdate);
     };
   }, []);
@@ -102,7 +99,7 @@ const PanCakeClaim = () => {
   return (
     <div className="relative">
       <div
-        className="absolute -top-16 -left-20 inset-0  bg-contain bg-no-repeat overflow-clip   "
+        className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat overflow-clip"
         style={{
           backgroundImage: `url('/assets/pancake/pancake_bg.png')`,
           backgroundPosition: "left -300px",
@@ -123,15 +120,17 @@ const PanCakeClaim = () => {
               </div>
             </div>
             <div className="relative col-span-8 h-full">
-              <AdvancedVideo
-                cldVid={pancakeVideo}
-                controls={false}
+              <video
                 ref={videoRef}
                 className="absolute top-0 left-0 w-full h-full object-contain"
+                playsInline
                 autoPlay
-                loop
                 muted
-              />
+                loop
+                preload="auto">
+                <source src={videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
