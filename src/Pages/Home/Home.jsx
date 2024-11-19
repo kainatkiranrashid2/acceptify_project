@@ -38,7 +38,7 @@ const Home = () => {
       <div className="bg-white  dark:bg-black">
         <PanCakeClaim />
         {/* <ClaimsSection /> */}
-        <CodeSnippet />
+        {/* <CodeSnippet /> */}
         <BeautifulBranding />
         <LighteningFastTransaction />
 

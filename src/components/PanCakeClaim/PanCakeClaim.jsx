@@ -1,9 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PanCakeClaim = () => {
   const videoRef = useRef(null);
-  const [currentTime, setCurrentTime] = useState(0);
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const [content, setContent] = useState({
+    title: "Protect your Customers and your Reputation with Acceptify",
+    subtitle:
+      "Acceptify is designed to meet the stringent security standards of the Payment Card Industry's Data Security Standard (PCI-DSS). Customer's data is always strongly encrypted.",
+    highlightedWords: ["Protect your", "Customers"],
+  });
 
   const cld = new Cloudinary({
     cloud: {
@@ -11,15 +22,7 @@ const PanCakeClaim = () => {
     },
   });
 
-  // Generate Cloudinary URL directly
   const videoUrl = `https://res.cloudinary.com/dq5guzzge/video/upload/v1/acceptify/assets/pancake/pancake_v3`;
-
-  const [content, setContent] = useState({
-    title: "Protect your Customers and your Reputation with Acceptify",
-    subtitle:
-      "Acceptify is designed to meet the stringent security standards of the Payment Card Industry's Data Security Standard (PCI-DSS). Customer's data is always strongly encrypted.",
-    highlightedWords: ["Customers"],
-  });
 
   const timeBasedContent = {
     0: {
@@ -50,40 +53,79 @@ const PanCakeClaim = () => {
     },
   };
 
+  const timestamps = Object.keys(timeBasedContent)
+    .map(Number)
+    .sort((a, b) => a - b);
+
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const section = sectionRef.current;
+    if (!video || !section) return;
 
+    // Handle video time updates for autoplay content changes
     const handleTimeUpdate = () => {
       const currentTime = video.currentTime;
-
-      const timestamps = Object.keys(timeBasedContent)
-        .map(Number)
-        .sort((a, b) => b - a);
-
-      const activeTimestamp = timestamps.find((time) => currentTime >= time);
+      const activeTimestamp = timestamps
+        .slice()
+        .reverse()
+        .find((time) => currentTime >= time);
 
       if (activeTimestamp !== undefined) {
         setContent(timeBasedContent[activeTimestamp]);
       }
     };
 
-    // Handle video loading
-    const handleCanPlay = () => {
-      video.play().catch((error) => {
-        console.error("Video playback failed:", error);
-      });
-    };
-
-    video.addEventListener("canplay", handleCanPlay);
+    // Initialize video with autoplay
+    video.addEventListener("canplay", () => {
+      video.play().catch(console.error);
+    });
     video.addEventListener("timeupdate", handleTimeUpdate);
-
-    // Load the video
     video.load();
 
+    // Set up ScrollTrigger for scroll-based control
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: section,
+      start: "top top",
+      end: `+=${window.innerHeight * (timestamps.length - 1)}`,
+      pin: true,
+      scrub: 1,
+      onUpdate: (self) => {
+        // Only update video time if we're actually scrolling
+        if (self.isActive) {
+          const totalDuration = timestamps[timestamps.length - 1];
+          const videoTime = self.progress * totalDuration;
+
+          // Pause autoplay when scrolling
+          video.pause();
+          video.currentTime = videoTime;
+
+          // Find and set content based on current time
+          const activeTimestamp = timestamps
+            .slice()
+            .reverse()
+            .find((time) => videoTime >= time);
+
+          if (activeTimestamp !== undefined) {
+            setContent(timeBasedContent[activeTimestamp]);
+          }
+        } else {
+          // Resume autoplay when not scrolling
+          video.play().catch(console.error);
+        }
+      },
+      onLeave: () => {
+        // Resume autoplay when leaving the section
+        video.play().catch(console.error);
+      },
+      onEnterBack: () => {
+        // Resume autoplay when entering back
+        video.play().catch(console.error);
+      },
+    });
+
     return () => {
-      video.removeEventListener("canplay", handleCanPlay);
       video.removeEventListener("timeupdate", handleTimeUpdate);
+      scrollTrigger.kill();
     };
   }, []);
 
@@ -97,9 +139,9 @@ const PanCakeClaim = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-screen overflow-hidden" ref={sectionRef}>
       <div
-        className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat overflow-clip"
+        className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat"
         style={{
           backgroundImage: `url('/assets/pancake/pancake_bg.png')`,
           backgroundPosition: "left -300px",
@@ -108,29 +150,33 @@ const PanCakeClaim = () => {
           transformOrigin: "top left",
         }}
       />
-      <div className="relative">
-        <div className="py-20 px-[180px]">
-          <div className="w-full grid grid-cols-12 items-center h-screen gap-36">
-            <div className="col-span-4">
-              <div className="3xl:text-[34px]/[51px] font-Inter font-semibold leading-tighter">
-                {highlightText(content.title, content.highlightedWords)}
+      <div className="relative h-full">
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-4 lg:px-[180px]">
+            <div className="flex items-center gap-36">
+              <div
+                className="w-1/3 transition-opacity duration-300"
+                ref={contentRef}>
+                <div className="text-[34px] leading-[51px] font-Inter font-semibold">
+                  {highlightText(content.title, content.highlightedWords)}
+                </div>
+                <div className="text-[20px] leading-[33px] font-Inter font-normal mt-4">
+                  {content.subtitle}
+                </div>
               </div>
-              <div className="3xl:text-[20px]/[33px] font-Inter font-normal mt-4 leading-tighter">
-                {content.subtitle}
+              <div className="w-2/3 relative">
+                <video
+                  ref={videoRef}
+                  className="w-full h-screen object-contain"
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
+                  preload="auto">
+                  <source src={videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
-            </div>
-            <div className="relative col-span-8 h-full">
-              <video
-                ref={videoRef}
-                className="absolute top-0 left-0 w-full h-full object-contain"
-                playsInline
-                autoPlay
-                muted
-                loop
-                preload="auto">
-                <source src={videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
             </div>
           </div>
         </div>
