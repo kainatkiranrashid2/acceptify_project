@@ -183,7 +183,17 @@ const PanCakeClaim = () => {
     if (scrollTriggerRef.current) {
       scrollTriggerRef.current.kill(true);
       setIsScrolling(false);
-      videoRef.current?.pause();
+      // videoRef.current?.pause();
+      scrollCountRef.current = 0;
+      enableBodyScroll();
+    }
+  };
+
+  const handlePin = () => {
+    if (scrollTriggerRef.current) {
+      scrollTriggerRef.current.kill(true);
+      setIsScrolling(false);
+      // videoRef.current?.pause();
       scrollCountRef.current = 0;
       enableBodyScroll();
     }
@@ -214,7 +224,7 @@ const PanCakeClaim = () => {
         else if (currentTime < 14) newTime = 14;
         else newTime = 14;
 
-        video.pause();
+        // video.pause();
         video.currentTime = newTime;
         updateContent(newTime);
       }
@@ -238,7 +248,7 @@ const PanCakeClaim = () => {
         else if (currentTime > 6) newTime = 6;
         else newTime = 0;
 
-        video.pause();
+        // video.pause();
         video.currentTime = newTime;
         updateContent(newTime);
       }
@@ -260,7 +270,7 @@ const PanCakeClaim = () => {
 
     const handleWheel = (e) => {
       const now = Date.now();
-      if (now - lastScrollTime < 200) return;
+      if (now - lastScrollTime < 1000) return;
       lastScrollTime = now;
 
       clearTimeout(scrollTimeout);
