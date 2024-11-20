@@ -164,7 +164,7 @@ const PanCakeClaim = () => {
       nextIndex = 0;
       if (scrollTriggerRef.current) {
         scrollTriggerRef.current.kill(false);
-        forceVideoPlay(videoRef.current);
+        forceVideoPlay(video);
       }
       return;
     }
@@ -172,7 +172,7 @@ const PanCakeClaim = () => {
       nextIndex = timestamps.length - 1;
       if (scrollTriggerRef.current) {
         scrollTriggerRef.current.kill(false);
-        forceVideoPlay(videoRef.current);
+        forceVideoPlay(video);
       }
       return;
     }
@@ -213,7 +213,6 @@ const PanCakeClaim = () => {
       trigger: section,
       start: "top top",
       end: `+=${scrollDistance}px`,
-      anticipatePin: true,
 
       pin: true,
       scrub: 1,
