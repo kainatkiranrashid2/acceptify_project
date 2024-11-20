@@ -190,7 +190,6 @@ const PanCakeClaim = () => {
     if (!section) return;
 
     let lastScrollTime = Date.now();
-
     const handleWheel = (e) => {
       const now = Date.now();
       if (now - lastScrollTime < 150) return;
@@ -207,17 +206,16 @@ const PanCakeClaim = () => {
         navigateToTimestamp(-1);
       }
     };
-    const scrollDistance = window.innerHeight * 2; // Adjust this multiplier as needed
+
+    const scrollDistance = window.innerHeight * 2;
 
     scrollTriggerRef.current = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: `+=${scrollDistance}px`,
-      anticipatePin: true,
-
       pin: true,
       scrub: 1,
-
+      anticipatePin: 1,
       onEnter: () => {
         setIsScrolling(true);
         section.addEventListener("wheel", handleWheel);
