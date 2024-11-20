@@ -2,12 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { Cloudinary } from "@cloudinary/url-gen";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PanCakeClaim = () => {
   const videoRef = useRef(null);
   const sectionRef = useRef(null);
+  const scrollTriggerRef = useRef(null);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const currentIndex = useRef(0);
+  const autoplayAttempts = useRef(0);
   const scrollTriggerRef = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const currentIndex = useRef(0);
@@ -53,6 +58,37 @@ const PanCakeClaim = () => {
   const timestamps = Object.keys(timeBasedContent)
     .map(Number)
     .sort((a, b) => a - b);
+  const [content, setContent] = useState(timeBasedContent[0]);
+
+  const updateContent = (time) => {
+    const currentTimestamp =
+      timestamps
+        .slice()
+        .reverse()
+        .find((timestamp) => time >= timestamp) ?? 0;
+
+    setContent(timeBasedContent[currentTimestamp]);
+    currentIndex.current = timestamps.indexOf(currentTimestamp);
+  };
+
+  // Force video to play
+  const forceVideoPlay = async (video) => {
+    try {
+      if (video.paused) {
+        await video.play();
+        console.log("Video started playing");
+      }
+    } catch (error) {
+      console.error("Playback failed:", error);
+      // Retry if still within attempts limit
+      if (autoplayAttempts.current < 5) {
+        autoplayAttempts.current++;
+        setTimeout(() => forceVideoPlay(video), 1000);
+      }
+    }
+  };
+
+  // Initialize video and autoplay
   const [content, setContent] = useState(timeBasedContent[0]);
 
   const updateContent = (time) => {
@@ -225,8 +261,16 @@ const PanCakeClaim = () => {
       onLeave: () => {
         setIsScrolling(false);
         section.removeEventListener("wheel", handleWheel);
+        setIsScrolling(false);
+        section.removeEventListener("wheel", handleWheel);
       },
       onEnterBack: () => {
+        setIsScrolling(true);
+        section.addEventListener("wheel", handleWheel);
+      },
+      onLeaveBack: () => {
+        setIsScrolling(false);
+        section.removeEventListener("wheel", handleWheel);
         setIsScrolling(true);
         section.addEventListener("wheel", handleWheel);
       },
@@ -237,6 +281,10 @@ const PanCakeClaim = () => {
     });
 
     return () => {
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.kill();
+      }
+      section.removeEventListener("wheel", handleWheel);
       if (scrollTriggerRef.current) {
         scrollTriggerRef.current.kill();
       }
@@ -255,7 +303,9 @@ const PanCakeClaim = () => {
 
   return (
     <div ref={sectionRef} className="relative">
+    <div ref={sectionRef} className="relative">
       <div
+        className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat overflow-clip"
         className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat overflow-clip"
         style={{
           backgroundImage: `url('/assets/pancake/pancake_bg.png')`,
@@ -265,6 +315,29 @@ const PanCakeClaim = () => {
           transformOrigin: "top left",
         }}
       />
+      <div className="relative">
+        <div className="py-20 px-[180px]">
+          <div className="w-full grid grid-cols-12 items-center h-screen gap-36">
+            <div className="col-span-4">
+              <div className="3xl:text-[34px]/[51px] font-Inter font-semibold leading-tighter">
+                {highlightText(content.title, content.highlightedWords)}
+              </div>
+              <div className="3xl:text-[20px]/[33px] font-Inter font-normal mt-4 leading-tighter">
+                {content.subtitle}
+              </div>
+            </div>
+            <div className="relative col-span-8 h-full">
+              <video
+                ref={videoRef}
+                className="absolute top-0 left-0 w-full h-full object-contain"
+                playsInline
+                autoPlay
+                muted
+                loop
+                preload="auto">
+                <source src={videoUrl} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
       <div className="relative">
         <div className="py-20 px-[180px]">
           <div className="w-full grid grid-cols-12 items-center h-screen gap-36">
