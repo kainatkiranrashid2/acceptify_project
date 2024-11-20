@@ -11,7 +11,10 @@ const PanCakeClaim = () => {
   const scrollTriggerRef = useRef(null);
   const [isScrolling, setIsScrolling] = useState(false);
   const currentIndex = useRef(0);
+  const scrollsPastLastTimestamp = useRef(0);
+  const scrollsPastFirstTimestamp = useRef(0);
   const autoplayAttempts = useRef(0);
+  const isUnpinning = useRef(false);
 
   const cld = new Cloudinary({
     cloud: {
@@ -55,6 +58,30 @@ const PanCakeClaim = () => {
     .sort((a, b) => a - b);
   const [content, setContent] = useState(timeBasedContent[0]);
 
+  const cleanupScrolling = () => {
+    if (scrollTriggerRef.current) {
+      scrollTriggerRef.current.kill();
+    }
+    setIsScrolling(false);
+    document.body.style.overflow = "";
+    isUnpinning.current = false;
+  };
+
+  const unpinAndScroll = (direction) => {
+    isUnpinning.current = true;
+    requestAnimationFrame(() => {
+      cleanupScrolling();
+      // Smoothly scroll to the previous or next section
+      const targetOffset =
+        sectionRef.current.offsetTop +
+        (direction > 0 ? window.innerHeight : -window.innerHeight);
+      window.scrollTo({
+        top: targetOffset,
+        behavior: "smooth",
+      });
+    });
+  };
+
   const updateContent = (time) => {
     const currentTimestamp =
       timestamps
@@ -62,11 +89,12 @@ const PanCakeClaim = () => {
         .reverse()
         .find((timestamp) => time >= timestamp) ?? 0;
 
-    setContent(timeBasedContent[currentTimestamp]);
-    currentIndex.current = timestamps.indexOf(currentTimestamp);
+    if (timeBasedContent[currentTimestamp] !== content) {
+      setContent(timeBasedContent[currentTimestamp]);
+      currentIndex.current = timestamps.indexOf(currentTimestamp);
+    }
   };
 
-  // Force video to play
   const forceVideoPlay = async (video) => {
     try {
       if (video.paused) {
@@ -75,7 +103,6 @@ const PanCakeClaim = () => {
       }
     } catch (error) {
       console.error("Playback failed:", error);
-      // Retry if still within attempts limit
       if (autoplayAttempts.current < 5) {
         autoplayAttempts.current++;
         setTimeout(() => forceVideoPlay(video), 1000);
@@ -83,16 +110,54 @@ const PanCakeClaim = () => {
     }
   };
 
-  // Initialize video and autoplay
+  const navigateToTimestamp = (direction) => {
+    const video = videoRef.current;
+    if (!video || isUnpinning.current) return;
+
+    let nextIndex = currentIndex.current + direction;
+
+    // Handle scrolling past last timestamp
+    if (nextIndex >= timestamps.length) {
+      scrollsPastLastTimestamp.current += 1;
+      scrollsPastFirstTimestamp.current = 0; // Reset other counter
+      if (scrollsPastLastTimestamp.current >= 2) {
+        unpinAndScroll(1); // Scroll down
+        return;
+      }
+      return;
+    }
+
+    // Handle scrolling before first timestamp
+    if (nextIndex < 0) {
+      scrollsPastFirstTimestamp.current += 1;
+      scrollsPastLastTimestamp.current = 0; // Reset other counter
+      if (scrollsPastFirstTimestamp.current >= 2) {
+        unpinAndScroll(-1); // Scroll up
+        return;
+      }
+      return;
+    }
+
+    // Reset both counters when scrolling within bounds
+    scrollsPastLastTimestamp.current = 0;
+    scrollsPastFirstTimestamp.current = 0;
+
+    nextIndex = Math.max(0, Math.min(nextIndex, timestamps.length - 1));
+    if (nextIndex === currentIndex.current) return;
+
+    currentIndex.current = nextIndex;
+    const newTime = timestamps[nextIndex];
+    video.currentTime = newTime;
+    setContent(timeBasedContent[newTime]);
+    forceVideoPlay(video);
+  };
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Reset video state
     video.currentTime = 0;
     autoplayAttempts.current = 0;
-
-    // Force load the video
     video.load();
 
     const startVideo = () => {
@@ -101,19 +166,17 @@ const PanCakeClaim = () => {
       }
     };
 
-    // Intersection Observer to detect when video is in view
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !isScrolling) {
           startVideo();
         }
       },
-      { threshold: 0.1 }
+      { threshold: [0, 0.25, 0.5, 0.75, 1] }
     );
 
     observer.observe(video);
 
-    // Event listeners for video
     const events = [
       ["loadedmetadata", startVideo],
       ["canplay", startVideo],
@@ -136,15 +199,10 @@ const PanCakeClaim = () => {
       ],
     ];
 
-    // Add all event listeners
     events.forEach(([event, handler]) => {
       video.addEventListener(event, handler);
     });
 
-    // Initial play attempt
-    startVideo();
-
-    // Cleanup
     return () => {
       observer.disconnect();
       events.forEach(([event, handler]) => {
@@ -153,47 +211,19 @@ const PanCakeClaim = () => {
     };
   }, [isScrolling]);
 
-  // Handle scroll navigation
-  const navigateToTimestamp = (direction) => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    let nextIndex = currentIndex.current + direction;
-
-    if (nextIndex < 0) {
-      nextIndex = 0;
-      if (scrollTriggerRef.current) {
-        scrollTriggerRef.current.kill();
-        forceVideoPlay(videoRef.current);
-      }
-      return;
-    }
-    if (nextIndex >= timestamps.length) {
-      nextIndex = timestamps.length - 1;
-      if (scrollTriggerRef.current) {
-        scrollTriggerRef.current.kill();
-        forceVideoPlay(videoRef.current);
-      }
-      return;
-    }
-
-    currentIndex.current = nextIndex;
-    const newTime = timestamps[nextIndex];
-    video.currentTime = newTime;
-    updateContent(newTime);
-    forceVideoPlay(videoRef.current);
-  };
-
-  // Set up ScrollTrigger
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
     let lastScrollTime = Date.now();
+    const scrollThreshold = 250;
 
     const handleWheel = (e) => {
+      if (isUnpinning.current) return;
+
+      e.preventDefault();
       const now = Date.now();
-      if (now - lastScrollTime < 150) return;
+      if (now - lastScrollTime < scrollThreshold) return;
       lastScrollTime = now;
 
       const video = videoRef.current;
@@ -201,46 +231,108 @@ const PanCakeClaim = () => {
 
       video.pause();
 
-      if (e.deltaY > 0) {
-        navigateToTimestamp(1);
-      } else {
-        navigateToTimestamp(-1);
+      navigateToTimestamp(e.deltaY > 0 ? 1 : -1);
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e) => {
+      if (!isUnpinning.current) {
+        touchStartY = e.touches[0].clientY;
       }
     };
-    const scrollDistance = window.innerHeight * 2; // Adjust this multiplier as needed
 
-    scrollTriggerRef.current = ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: `+=${scrollDistance}px`,
-      anticipatePin: true,
+    const handleTouchMove = (e) => {
+      if (!isScrolling || isUnpinning.current) return;
+      const touchEndY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchEndY;
 
-      pin: true,
-      scrub: 1,
+      if (Math.abs(deltaY) > 50) {
+        navigateToTimestamp(deltaY > 0 ? 1 : -1);
+        touchStartY = touchEndY;
+      }
+    };
 
-      onEnter: () => {
-        setIsScrolling(true);
-        section.addEventListener("wheel", handleWheel);
-      },
-      onLeave: () => {
-        setIsScrolling(false);
-        section.removeEventListener("wheel", handleWheel);
-      },
-      onEnterBack: () => {
-        setIsScrolling(true);
-        section.addEventListener("wheel", handleWheel);
-      },
-      onLeaveBack: () => {
-        setIsScrolling(false);
-        section.removeEventListener("wheel", handleWheel);
-      },
-    });
+    const preventScroll = (e) => {
+      if (isScrolling && !isUnpinning.current) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    const scrollDistance = window.innerHeight * 4;
+
+    // Create two ScrollTriggers for top and bottom pinning
+    const createScrollTriggers = () => {
+      // Common configuration for both triggers
+      const commonConfig = {
+        anticipatePin: 1,
+        pin: true,
+        scrub: 1.5,
+        onEnter: () => {
+          setIsScrolling(true);
+          document.body.style.overflow = "hidden";
+          section.addEventListener("wheel", handleWheel, { passive: false });
+          section.addEventListener("touchstart", handleTouchStart);
+          section.addEventListener("touchmove", handleTouchMove);
+          window.addEventListener("scroll", preventScroll, { passive: false });
+        },
+        onLeave: cleanupScrolling,
+        onEnterBack: () => {
+          if (!isUnpinning.current) {
+            setIsScrolling(true);
+            document.body.style.overflow = "hidden";
+            section.addEventListener("wheel", handleWheel, { passive: false });
+            section.addEventListener("touchstart", handleTouchStart);
+            section.addEventListener("touchmove", handleTouchMove);
+            window.addEventListener("scroll", preventScroll, {
+              passive: false,
+            });
+          }
+        },
+        onLeaveBack: cleanupScrolling,
+      };
+
+      // Top pinning trigger
+      scrollTriggerRef.current = ScrollTrigger.create({
+        ...commonConfig,
+        trigger: section,
+        start: "top top",
+        endTrigger: "html", // This ensures it works for the entire page
+        end: () => `+=${window.innerHeight * 4}`,
+        onEnter: () => {
+          console.log("Top trigger entered");
+          commonConfig.onEnter();
+        },
+      });
+
+      // Bottom pinning trigger
+      const bottomTrigger = ScrollTrigger.create({
+        ...commonConfig,
+        trigger: section,
+        start: "bottom bottom", // Pin when bottom edge hits viewport bottom
+        endTrigger: "html",
+        end: () => `+=${window.innerHeight * 4}`,
+        onEnter: () => {
+          console.log("Bottom trigger entered");
+          commonConfig.onEnter();
+        },
+      });
+
+      return () => {
+        scrollTriggerRef.current?.kill();
+        bottomTrigger.kill();
+      };
+    };
+
+    const cleanup = createScrollTriggers();
 
     return () => {
-      if (scrollTriggerRef.current) {
-        scrollTriggerRef.current.kill();
-      }
+      cleanup();
+      cleanupScrolling();
       section.removeEventListener("wheel", handleWheel);
+      section.removeEventListener("touchstart", handleTouchStart);
+      section.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", preventScroll);
     };
   }, []);
 
@@ -254,7 +346,7 @@ const PanCakeClaim = () => {
   };
 
   return (
-    <div ref={sectionRef} className="relative">
+    <div ref={sectionRef} className="relative min-h-screen">
       <div
         className="absolute -top-16 -left-20 inset-0 bg-contain bg-no-repeat overflow-clip"
         style={{
