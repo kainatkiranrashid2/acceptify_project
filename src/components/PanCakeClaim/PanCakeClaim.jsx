@@ -92,6 +92,7 @@ const PanCakeClaim = () => {
           // Update video time and content
           video.currentTime = Math.min(currentTime, videoDuration);
           updateContent(video.currentTime);
+          video.play();
         },
       },
     });
