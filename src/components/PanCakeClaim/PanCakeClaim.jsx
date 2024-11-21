@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Cloudinary } from "@cloudinary/url-gen";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 
@@ -73,6 +72,23 @@ const PanCakeClaim = () => {
     // Reset content to initial state
     setContent(timeBasedContent[0]);
 
+    const handleTimeUpdate = () => {
+      updateContent(video.currentTime);
+    };
+    video.addEventListener("timeupdate", handleTimeUpdate);
+
+    // Add event listener for video end to reset and loop
+    const handleVideoEnd = () => {
+      // Reset to the beginning of the content
+      setContent(timeBasedContent[0]);
+
+      // Optionally, you can restart the scroll animation or do other reset logic here
+      if (scrollTriggerRef.current) {
+        scrollTriggerRef.current.scroll(0);
+      }
+    };
+    video.addEventListener("ended", handleVideoEnd);
+
     // Create GSAP Timeline
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -82,7 +98,6 @@ const PanCakeClaim = () => {
         pin: true,
         pinSpacing: true,
         scrub: 1,
-        // markers: true,
         onUpdate: (self) => {
           // Calculate video time based on scroll progress
           const progress = self.progress;
@@ -97,20 +112,13 @@ const PanCakeClaim = () => {
       },
     });
 
-    // Optional: Add timeline animations if needed
-    tl.to(video, {
-      duration: 1,
-      onComplete: () => {
-        // Optional video-related animations
-      },
-    });
-
     // Store references
     tlRef.current = tl;
     scrollTriggerRef.current = tl.scrollTrigger;
 
     // Cleanup
     return () => {
+      video.removeEventListener("ended", handleVideoEnd);
       tl.kill();
     };
   }, []);
@@ -149,6 +157,7 @@ const PanCakeClaim = () => {
                 playsInline
                 muted
                 autoPlay
+                loop
                 style={{
                   backgroundColor: "transparent",
                   background: "transparent",
