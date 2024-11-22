@@ -97,7 +97,7 @@ const PanCakeClaim = () => {
         end: "bottom bottom",
         pin: true,
         pinSpacing: true,
-        scrub: 3,
+        scrub: 0.5,
         onUpdate: (self) => {
           // Calculate video time based on scroll progress
           const progress = self.progress;
