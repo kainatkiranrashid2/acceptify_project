@@ -101,6 +101,7 @@ const PanCakeClaim = () => {
     tl.to(video, {
       duration: 1,
       onComplete: () => {
+        video.play();
         // Optional video-related animations
       },
     });
@@ -136,7 +137,7 @@ const PanCakeClaim = () => {
                   <div className="3xl:text-[34px]/[51px] font-Inter font-semibold leading-tighter">
                     {highlightText(content.title, content.highlightedWords)}
                   </div>
-                  <div className="3xl:text-[20px]/[33px] font-Inter font-normal mt-4 leading-tighter">
+                  <div className="3xl:text-[20px]/[33px] font-Inter font-normal mt-6 leading-tighter">
                     {content.subtitle}
                   </div>
                 </>
@@ -148,6 +149,7 @@ const PanCakeClaim = () => {
                 className="absolute top-0 left-0 w-full h-full object-contain"
                 playsInline
                 muted
+                loop
                 autoPlay
                 style={{
                   backgroundColor: "transparent",
