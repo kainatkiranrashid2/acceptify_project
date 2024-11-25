@@ -47,7 +47,7 @@ const HeroSection = () => {
 
       {/* Text overlay */}
       <div className="ml-[140px] relative z-10 h-full flex items-center">
-        <div className="max-w-[400px]2xl:max-w-[677px]">
+        <div className="max-w-[400px] 2xl:max-w-[677px]">
           <h1 className="3xl:text-[60px]/[66px] font-Inter text-white font-semibold tracking-tighter">
             Lighting Fast Mobile Enterprise Payments Anywhere
           </h1>
