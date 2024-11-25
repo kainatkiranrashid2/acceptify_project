@@ -39,8 +39,8 @@ const Home = () => {
         <PanCakeClaim />
         {/* <ClaimsSection /> */}
         {/* <CodeSnippet /> */}
-        <BeautifulBranding />
-        <LighteningFastTransaction />
+        {/* <BeautifulBranding /> */}
+        {/* <LighteningFastTransaction /> */}
 
         <FeaturesGrid />
         <SmartTransaction />
