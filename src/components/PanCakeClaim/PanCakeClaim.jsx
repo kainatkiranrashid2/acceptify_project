@@ -202,7 +202,7 @@ const PanCakeClaim = () => {
         end: "bottom bottom",
         pin: true,
         pinSpacing: true,
-        scrub: 1,
+        scrub: 0.4,
         onUpdate: (self) => {
           const progress = self.progress;
           updateVideoPlayback(progress);
