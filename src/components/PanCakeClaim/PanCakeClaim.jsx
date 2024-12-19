@@ -212,37 +212,59 @@ const PanCakeClaim = () => {
       },
     });
 
-    // Text scroll animation
-    const animateTextScroll = () => {
-      const textElements = gsap.utils.toArray(".text-content");
+    const animateSmoothTextScroll = () => {
+      const textContainer = textContainerRef.current;
 
-      textElements.forEach((textDiv, index) => {
-        gsap.fromTo(
-          textDiv,
-          {
-            y: index === 0 ? "0%" : "100%",
-            opacity: index === 0 ? 1 : 0,
-            scale: index === 0 ? 1 : 0.9,
-          },
-          {
-            y: "50%",
-            opacity: 1,
-            scale: 1,
-            duration: 1,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: textDiv,
-              start: "top bottom",
-              end: "bottom top",
-              toggleActions: "play reverse play reverse",
+      // Create a GSAP timeline specifically for text scrolling
+      const textScrollTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 3, // Smooth scrubbing
+        },
+      });
+
+      // Animate text stack with smooth transitions
+      textStack.forEach((content, index) => {
+        // Enter animation
+        textScrollTimeline
+          .fromTo(
+            `.text-content-${index}`,
+            {
+              y: "100%", // Start below the visible area
+              opacity: 0,
+              scale: 0.9,
             },
-          }
-        );
+            {
+              y: "0%", // Move to the center
+              opacity: 1,
+              scale: 1,
+              duration: 1,
+              ease: "power2.inOut",
+            }
+          )
+          .to(
+            `.text-content-${index}`,
+            {
+              y: "-100%", // Move out above the visible area
+              opacity: 0,
+              scale: 0.9,
+              duration: 1,
+              ease: "power3.in",
+            },
+            "+=0.5" // Slight delay between text transitions
+          );
       });
     };
 
-    // Initial text animation
-    animateTextScroll();
+    // Rerun text animation when textStack changes
+    if (textStack.length > 0) {
+      animateSmoothTextScroll();
+    }
+
+    tlRef.current = tl;
+    scrollTriggerRef.current = tl.scrollTrigger;
 
     tlRef.current = tl;
     scrollTriggerRef.current = tl.scrollTrigger;
@@ -296,6 +318,9 @@ const PanCakeClaim = () => {
                     className="w-full h-full object-contain"
                     playsInline
                     muted
+                    controlsList="nodownload" // Prevents download option in controls
+                    disablePictureInPicture // Disables picture-in-picture mode
+                    onContextMenu={(e) => e.preventDefault()} // Prevents right-click menu
                     preload="auto"
                     style={{
                       backgroundColor: "transparent",
