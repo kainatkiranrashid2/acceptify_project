@@ -11,7 +11,15 @@ const BeautifulBranding = () => {
           </div>
         </div>
         <div className="w-1/2">
-          <video className="w-full h-full object-cover" autoPlay loop muted>
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            controlsList="nodownload" // Prevents download option in controls
+            disablePictureInPicture // Disables picture-in-picture mode
+            playsInline // Better mobile experience
+            onContextMenu={(e) => e.preventDefault()}>
             <source
               src="/assets/beautiful_branding/beatiful_branding_v2.webm"
               type="video/webm"

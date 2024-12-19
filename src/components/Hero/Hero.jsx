@@ -49,9 +49,12 @@ const Hero = () => {
             alt="Global map"
             className="w-full hidden md:block	 lg:z-20 *  max-w-full mx-auto relative"
             autoPlay
-            playsInline
             loop
             muted
+            controlsList="nodownload" // Prevents download option in controls
+            disablePictureInPicture // Disables picture-in-picture mode
+            playsInline // Better mobile experience
+            onContextMenu={(e) => e.preventDefault()}
           />
           <video
             src="/assets/hero/mobile_half_globe.webm"
@@ -60,6 +63,10 @@ const Hero = () => {
             autoPlay
             loop
             muted
+            controlsList="nodownload" // Prevents download option in controls
+            disablePictureInPicture // Disables picture-in-picture mode
+            playsInline // Better mobile experience
+            onContextMenu={(e) => e.preventDefault()}
           />
         </div>
       </div>

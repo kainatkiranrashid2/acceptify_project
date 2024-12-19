@@ -122,8 +122,12 @@ const OurIndustries = () => {
         <video
           ref={videoRef}
           autoPlay
+          loop
           muted
-          playsInline
+          controlsList="nodownload" // Prevents download option in controls
+          disablePictureInPicture // Disables picture-in-picture mode
+          playsInline // Better mobile experience
+          onContextMenu={(e) => e.preventDefault()}
           className={`w-full h-full object-cover rounded-2xl transition-opacity duration-1500 ${
             fade ? "opacity-0" : "opacity-100"
           }`}

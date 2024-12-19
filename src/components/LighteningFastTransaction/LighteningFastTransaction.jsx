@@ -5,7 +5,15 @@ const LighteningFastTransaction = () => {
     <div className="mt-20 my-20">
       <div className="flex justify-center">
         <div className="w-1/2">
-          <video className="w-full h-full object-cover" autoPlay loop muted>
+          <video
+            className="w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            controlsList="nodownload" // Prevents download option in controls
+            disablePictureInPicture // Disables picture-in-picture mode
+            playsInline // Better mobile experience
+            onContextMenu={(e) => e.preventDefault()}>
             <source
               src="/assets/lighteningfast/lightening_fast.webm"
               type="video/webm"
